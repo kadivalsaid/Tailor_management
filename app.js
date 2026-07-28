@@ -1,4 +1,4 @@
-const API = 'https://kadivalsaid.github.io/Tailor_management/';
+const API = 'http://tailor-app.infinityfreeapp.com';
 let tailor = null;
 let cur = null;
 const exCnt = { sp: 0, km: 0, sh: 0, pt: 0 };
