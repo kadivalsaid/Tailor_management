@@ -1,4 +1,4 @@
-const API = 'http://localhost/tailor_app';
+const API = 'https://kadivalsaid.github.io/Tailor_management/';
 let tailor = null;
 let cur = null;
 const exCnt = { sp: 0, km: 0, sh: 0, pt: 0 };
