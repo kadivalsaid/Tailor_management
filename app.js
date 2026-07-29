@@ -85,17 +85,53 @@ function inits(n) { return n.split(' ').slice(0,2).map(w => w[0]?.toUpperCase() 
 
 async function api(file, data) {
   try {
-    const res = await fetch(`${API}/${file}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-    return await res.json();
-  } catch (e) { return { success: false, message: 'Server connection fail' }; }
+    const res = await fetch(`${API}/${file}`, { 
+      method: 'POST', 
+      headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }, 
+      body: JSON.stringify(data) 
+    });
+    
+    const textData = await res.text();
+    console.log(`Response from ${file}:`, textData);
+
+    try {
+      return JSON.parse(textData);
+    } catch (parseError) {
+      console.error('PHP Output JSON nahi hai:', textData);
+      return { success: false, message: 'Server Response Error (Invalid JSON)' };
+    }
+  } catch (e) { 
+    console.error('Fetch Error:', e);
+    return { success: false, message: 'Server connection fail: ' + e.message }; 
+  }
 }
 
 async function apiGet(file, params = {}) {
   try {
     const q = new URLSearchParams(params).toString();
-    const res = await fetch(`${API}/${file}?${q}`);
-    return await res.json();
-  } catch (e) { return { success: false, message: 'Server connection fail' }; }
+    const res = await fetch(`${API}/${file}?${q}`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+    
+    const textData = await res.text();
+    console.log(`Response from ${file}:`, textData);
+
+    try {
+      return JSON.parse(textData);
+    } catch (parseError) {
+      console.error('PHP Output JSON nahi hai:', textData);
+      return { success: false, message: 'Server Response Error (Invalid JSON)' };
+    }
+  } catch (e) { 
+    console.error('Fetch Get Error:', e);
+    return { success: false, message: 'Server connection fail: ' + e.message }; 
+  }
 }
 
 function setBtn(id, loading, text) {
