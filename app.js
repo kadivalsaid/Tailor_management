@@ -1,4 +1,4 @@
-const API = 'http://tailor-app.infinityfreeapp.com';
+const API = 'https://tailor-app.infinityfreeapp.com';
 let tailor = null;
 let cur = null;
 const exCnt = { sp: 0, km: 0, sh: 0, pt: 0 };
